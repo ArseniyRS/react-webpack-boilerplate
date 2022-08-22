@@ -1,0 +1,99 @@
+{
+  "parser": "@typescript-eslint/parser",
+
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": [
+    "plugin:react/recommended",
+    "plugin:react/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 12,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "plugins": [
+    "@typescript-eslint",
+    "react",
+    "react-hooks",
+    "eslint-plugin-import",
+    "jsx-a11y",
+    "prettier"
+  ],
+  // "ignorePatterns": [
+  //   "./client/tests/*",
+  //   "./client/styles/*"
+  // ],
+  "settings": {
+    "import/resolver": {
+      "typescript": {},
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx", ".css", ".scss"],
+        "moduleDirectory": ["node_modules", "src/"]
+      }
+    }
+  },
+  "rules": {
+    "camelcase": 1,
+    "eqeqeq": ["warn"],
+    "no-console": [
+      "warn",
+      {
+        "allow": [
+          "warn",
+          "error"
+        ]
+      }
+    ],
+    "no-plusplus": "warn",
+    "no-shadow": "off",
+    "@typescript-eslint/no-shadow": ["error"],
+    "no-param-reassign": [2, { "props": false }],
+    "object-curly-newline": "off",
+    "no-unused-vars": 1,
+
+    "react-hooks/exhaustive-deps": 0,
+    "react/destructuring-assignment": 0,
+    "react/jsx-props-no-spreading": 0,
+    "react/require-default-props": 0,
+    "react/jsx-no-useless-fragment": "off",
+    "react/no-array-index-key": "warn",
+    "react/no-unstable-nested-components": 1,
+    "react/forbid-prop-types": [
+      1,
+      {
+        "forbid": [
+          "any"
+        ]
+      }
+    ],
+    "react/jsx-filename-extension": [
+      1,
+      {
+        "extensions": [
+          ".js", ".jsx", ".tsx"
+        ]
+      }
+    ],
+    "react/jsx-no-bind": "off",
+    "react/state-in-constructor": 0,
+
+    "import/no-extraneous-dependencies": 0,
+    "import/prefer-default-export": 0,
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "js": "never",
+        "jsx": "never",
+        "ts": "never",
+        "tsx": "never"
+      }
+    ]
+  }
+}
