@@ -1,18 +1,17 @@
 import path from "path";
 import { Configuration as WebpackConfiguration, DefinePlugin } from "webpack";
-import { Configuration as WebpackDevServerConfiguration } from 'webpack-dev-server';
+import { Configuration as WebpackDevServerConfiguration } from "webpack-dev-server";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
 import TsconfigPathsPlugin from "tsconfig-paths-webpack-plugin";
-
+import StylelintPlugin from "stylelint-webpack-plugin";
+import MiniCssExtractPlugin from "mini-css-extract-plugin";
 interface Configuration extends WebpackConfiguration {
   devServer?: WebpackDevServerConfiguration;
 }
-const webpackConfig: Configuration =({
+const webpackConfig: Configuration = {
   entry: "./src/index.tsx",
-  ...(process.env.production || !process.env.development
-    ? {}
-    : { devtool: "eval-source-map" }),
+  ...(process.env.production || !process.env.development ? {} : { devtool: "eval-source-map" }),
 
   resolve: {
     extensions: [".ts", ".tsx", ".js"],
@@ -33,8 +32,14 @@ const webpackConfig: Configuration =({
         exclude: /build/,
       },
       {
-        test: /\.s?css$/,
-        use: ["style-loader", "css-loader"],
+        test: /\.(s(a|c)ss)$/,
+        use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
+      },
+      {
+        test: /\.(woff|woff2|eot|ttf|svg|jpg|png)$/,
+        use: {
+          loader: "url-loader",
+        },
       },
     ],
   },
@@ -48,6 +53,8 @@ const webpackConfig: Configuration =({
     new ForkTsCheckerWebpackPlugin({
       async: false,
     }),
+    new StylelintPlugin(),
+    new MiniCssExtractPlugin(),
   ],
   devServer: {
     historyApiFallback: true,
@@ -55,6 +62,6 @@ const webpackConfig: Configuration =({
     open: true,
     hot: true,
   },
-});
+};
 
 export default webpackConfig;
