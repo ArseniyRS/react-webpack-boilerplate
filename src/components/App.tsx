@@ -1,9 +1,31 @@
 import React from "react";
+import "../styles/global.scss";
 
 const App: React.FC = () => {
   return (
     <div className="wrapper">
-      <h1>React 17 and TypeScript 4 App!🚀</h1>
+      <h1>
+        🚀
+        <br />
+        Webpack
+      </h1>
+      <ul>
+        <li>⚛️ React</li>
+        <li>📖 Typescript</li>
+        <li>🔨 Eslint</li>
+        <li>💅 Prettier</li>
+        <li>🔨 Stylelint</li>
+        <li>🔥 Dockerize</li>
+        <li>🚀 Component and slice script generation</li>
+      </ul>
+      <p>Don&apos;t forget to install eslint extentions to your IDE</p>
+      <a
+        href="https://github.com/sinkrait00/react-webpack-boilerplate"
+        target="_blank"
+        rel="noreferrer"
+      >
+        Github
+      </a>
     </div>
   );
 };

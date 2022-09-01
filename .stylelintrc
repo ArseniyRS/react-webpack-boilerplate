@@ -16,7 +16,7 @@
       "border-in-box-model": true,
       "empty-line-between-groups": true
     }],
-		"prettier/prettier": [true, {"singleQuote": true, "tabWidth": 4, "useTabs": true}],
+		"prettier/prettier": [true, {"singleQuote": true, "tabWidth": 2, "useTabs": false}],
 		"color-hex-case": "lower"
 	}
 }

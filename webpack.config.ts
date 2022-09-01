@@ -63,7 +63,12 @@ const webpackConfig = (env: any, argv: any): Configuration => ({
         use: [MiniCssExtractPlugin.loader, "css-loader", "postcss-loader", "sass-loader"],
       },
       {
-        test: /\.(woff|woff2|eot|ttf|svg|jpg|png)$/,
+        test: /\.svg$/,
+        issuer: /\.[jt]sx?$/,
+        use: ["@svgr/webpack", "url-loader"],
+      },
+      {
+        test: /\.(woff|woff2|eot|ttf|jpg|jpeg|png)$/,
         use: {
           loader: "url-loader",
         },
