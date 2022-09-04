@@ -26,27 +26,51 @@ function getConfig(mode: "production" | "development" | ""): DotenvConfigOutput 
   }
   return config;
 }
-
+function getPlugins(mode: "production" | "development") {
+  const plugins = [
+    new CleanWebpackPlugin(),
+    new HtmlWebpackPlugin({
+      template: "public/index.html",
+    }),
+    new ForkTsCheckerWebpackPlugin({
+      async: false,
+      typescript: {
+        memoryLimit: 4096,
+      },
+    }),
+    new StylelintPlugin(),
+    new MiniCssExtractPlugin({ filename: getHashFilename("css") }),
+    new DefinePlugin({
+      "process.env": JSON.stringify(getConfig(mode).parsed),
+    }),
+  ];
+  if (mode === "production") {
+    return [
+      new CleanWebpackPlugin(),
+      new CopyWebpackPlugin({
+        patterns: [
+          {
+            from: path.resolve(__dirname, "public/shared"),
+            to: path.resolve(__dirname, "build/shared"),
+          },
+        ],
+      }),
+      ...plugins,
+    ];
+  }
+  return plugins;
+}
 const webpackConfig = (env: any, argv: any): Configuration => ({
   entry: "./src/index.tsx",
   ...(argv.mode === "production" ? {} : { devtool: "eval-source-map" }),
-
   resolve: {
     extensions: [".ts", ".tsx", ".js"],
     plugins: [new TsconfigPathsPlugin({ configFile: "./tsconfig.json" })],
-    alias: {
-      "@": path.resolve(__dirname, "src"),
-      "@store": path.resolve(__dirname, "src/store"),
-      "@assets": path.resolve(__dirname, "src/assets"),
-      "@features": path.resolve(__dirname, "src/features"),
-      "@pages": path.resolve(__dirname, "src/pages"),
-      "@services": path.resolve(__dirname, "src/services"),
-      "@components": path.resolve(__dirname, "src/components"),
-    },
   },
   output: {
     path: path.join(__dirname, "/build"),
     filename: getHashFilename("js"),
+    chunkFilename: getHashFilename("js"),
   },
   module: {
     rules: [
@@ -75,31 +99,7 @@ const webpackConfig = (env: any, argv: any): Configuration => ({
       },
     ],
   },
-  plugins: [
-    new CleanWebpackPlugin(),
-    // argv.mode == "production" &&
-    //   new CopyWebpackPlugin({
-    //     patterns: [
-    //       {
-    //         from: path.resolve(__dirname, "public/shared"),
-    //         to: path.resolve(__dirname, "build/shared"),
-    //       },
-    //     ],
-    //   }),
-    new HtmlWebpackPlugin({
-      template: "public/index.html",
-      filename: "index.html",
-      inject: "body",
-    }),
-    new ForkTsCheckerWebpackPlugin({
-      async: false,
-    }),
-    new StylelintPlugin(),
-    new MiniCssExtractPlugin({ filename: getHashFilename("css") }),
-    new DefinePlugin({
-      "process.env": JSON.stringify(getConfig(argv.mode).parsed),
-    }),
-  ],
+  plugins: getPlugins(argv.mode),
   optimization: {
     minimize: true,
     minimizer: [

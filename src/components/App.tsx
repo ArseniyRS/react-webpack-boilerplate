@@ -1,5 +1,5 @@
 import React from "react";
-import "../styles/global.scss";
+import "styles/global.scss";
 
 const App: React.FC = () => {
   return (
@@ -20,7 +20,7 @@ const App: React.FC = () => {
       </ul>
       <p>Don&apos;t forget to install eslint extentions to your IDE</p>
       <a
-        href="https://github.com/sinkrait00/react-webpack-boilerplate"
+        href="https://github.com/ArseniyRs/react-webpack-boilerplate"
         target="_blank"
         rel="noreferrer"
       >

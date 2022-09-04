@@ -12,7 +12,14 @@
     "resolveJsonModule": true,
     "downlevelIteration": true,
     "paths": {
-      "*": ["src/*"]
+      "~": ["src/*"],
+      "store": ["src/store/*"],
+      "assets": ["src/assets/*"],
+      "features": ["src/features/*"],
+      "pages": ["src/pages/*"],
+      "services": ["src/services/*"],
+      "components": ["src/components/*"],
+      "styles": ["src/styles/*"],
     },
     "lib": [
       "esnext",
